@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+
+
+{% block title %} CRUD APP {% endblock %}
+
+
+
+{% block body %}
+
+
+<div class="row">
+        
+<div class="col md-12"> 
+
+        <div class="header-background">
+                
+                <div class="col md-3">
+                <h2> Welcome {{session['username']}} !</h2>
+                </div>
+
+                
+                <div class="col md-3" align="right">  
+                <a href="{{url_for('logout')}}" class="btn btn-light btn-sm">
+                <i class="fa-solid fa-power-off"></i></a>
+                </div> 
+           </div>
+        </div>
+</div>
+
+{% endblock %}

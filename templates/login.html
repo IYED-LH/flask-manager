@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block body %}
+
+
+<div class="wrapper bg-white">
+    
+    
+    <div class="h4 text-muted text-center pt-2">Enter your login details</div>
+    
+    <form class="pt-3" method=POST action="{{ url_for('login') }}" >
+        
+        <div class="form-group py-2">
+           
+            <div class="input-field">
+                 <i class="bi bi-person-fill p-2" > </i>
+                <input type="text" placeholder="Username" class="form-control" name="username" required >
+            </div>
+        
+        </div>
+        
+        <div class="form-group py-1 pb-2">
+            <div class="input-field"> 
+                <i class="bi bi-lock-fill p-2"></i>
+                <input type="password" placeholder="Enter your Password" class="form-control" name="pass" required>
+            
+            </div>
+        </div>
+       
+        <div class="d-flex align-items-start">
+        <div class="remember"> <label class="option text-muted"> Remember me <input type="radio" name="radio"> <span class="checkmark"></span> </label> </div>
+        <div class="ml-auto"> <a href="#" id="forgot">Forgot Password?</a> </div>
+        </div>
+
+        <button class="btn btn-block text-center my-3">Log in</button>
+        
+        <div class="text-center pt-3 text-muted">
+            Not a member? 
+            <a href="{{url_for('register')}}">Sign up</a></div>
+        
+    </form>
+</div>
+
+{% with messages = get_flashed_messages() %}
+
+                {% if messages %}
+
+                {% for message in messages %}
+                <div class="row d-flex justify-content-center">
+                
+                    <div class="col-md-4">
+                
+                <div class="alert alert-danger alert-dismissable" role="alert">
+
+                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+
+                        <span aria-hidden="true">x</span>
+
+                    </button>
+
+
+                {{message}}
+
+
+                </div>
+               
+            </div>
+                </div>
+            </div>
+
+
+
+                {% endfor %}
+
+                {% endif %}
+                {% endwith %}
+
+{% endblock %}

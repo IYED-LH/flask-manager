@@ -1,0 +1,322 @@
+{% extends 'base.html' %}
+{% include 'header.html' %}
+
+
+
+
+{% block title %} Home {% endblock %}
+
+
+
+{% block body %}
+
+{% with messages = get_flashed_messages() %}
+
+                {% if messages %}
+
+                {% for message in messages %}
+                <div class="container-fluid">
+                
+                <div class="alert alert-custom alert-dismissable" role="alert">
+
+                    <button type="button" class="close" data-dismiss="alert" aria-label="close" style="color: white;">
+
+                        <span aria-hidden="true">x</span>
+
+                    </button>
+
+
+                {{message}}
+
+
+                </div>
+               
+            </div>
+
+
+
+                {% endfor %}
+
+                {% endif %}
+                {% endwith %}
+
+<div class="container-fluid">
+    
+   <div class="row">
+        
+      <div class="col md-12">
+
+            <div class="jumbotron p-3">
+               
+               <div class="row">
+               
+                  <div class="col-sm-4">
+               
+                     <div class="input-group rounded">
+                 
+                        <input type="search" onkeyup="myFunction()" id="myInput" class="form-control rounded " placeholder="Search by Owner" aria-label="Search" aria-describedby="search-addon" style="border-color: rgba(64,4,133,1);"/>
+                  
+                
+                  </div>
+               
+                  </div>
+                
+               
+                  <div class="col-sm-8", align="right">
+               
+                     <button type="button"  class="button btn btn-block" data-toggle="modal" data-target="#mymodal">
+                     <i class="fa-solid fa-circle-plus spaceico"></i>Add Task</button>
+                     
+               
+               </div>
+            </div>
+          <div class="table-responsive">    
+            <table class="table table-hover table-striped"  id="myTable">
+                  
+               <thead class="purplebg">
+                    
+                  <tr>
+
+                        <th>ID</th>
+                        <th>Task</th>
+                        <th>Owner</th>
+                        <th>Email</th>
+                        <th style="text-align:center">Action</th>
+
+                    </tr>
+                  </thead>
+
+                   {% for row in taskdata %}
+                    <tr>
+                        <td style="word-wrap:break-word">{{row._id}}</td>
+                        <td style="word-wrap:break-word">{{row.task}}</td>
+                        <td style="word-wrap:break-word">{{row.owner}}</td>
+                        <td style="word-wrap:break-word">{{row.email}}</td>
+
+                        <td style="text-align:center">
+                            <a href="/update/{{row._id}}" class="btn btn-warning btn-sm purplebglight" data-toggle="modal" data-target="#modaledit{{row._id}}">
+                            <i class="fa-solid fa-pencil" title="Edit"></i></a>
+                            
+                            
+                            <a href="/delete/{{row._id}}" class="btn btn-danger btn-sm purplebglight" data-toggle="modal" data-target="#modaldelete{{row._id}}">
+                            <i class="fa-solid fa-ban" title="Delete"></i></a>
+                            
+
+                            <a href="/email/{{row.email}}" class="btn btn-primary btn-sm purplebglight ">
+                            <i class="fa-solid fa-paper-plane" title="Send Notification"></i></a>
+                            
+                            
+                            <input type="hidden"  name="owner" value="{{row.owner}}">
+                  </td>
+               </tr>
+
+
+                  <!-- Modal Edit Task-->
+<div id="modaledit{{row._id}}" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+
+
+      <div class="modal-content">
+
+
+         <div class="modal-header ">
+
+
+            <h4 class="modal-title">Update Task</h4>
+
+
+         </div>
+
+
+         <div class="modal-body">
+
+
+            <form action="{{url_for('update')}}" method="POST">
+
+
+               <div class="form-group">
+
+
+                  <label>Task</label>
+                  
+                  <input type="hidden"  name="_id" value="{{row._id}}">
+                  <input type="text" class="form-control" name="task" value="{{row.task}}">
+
+
+               </div>
+
+
+
+               <div class="form-group">
+
+
+                  <label>Owner</label>
+
+                  <input type="text" class="form-control" name="owner" value="{{row.owner}}">
+
+
+               </div>
+
+
+               <div class="form-group">
+
+
+                  <label>Email</label>
+
+                  <input type="email" class="form-control" name="email" value="{{row.email}}">
+
+
+               </div>
+
+         </div>
+
+
+         <div class="modal-footer">
+         
+            <button class="button btn btn-block" type="submit">Confirm</button>
+            <button type="button" class="button btn-secondary" data-dismiss="modal">Close</button>
+
+         </div>
+
+
+      </div>
+
+
+   </div>
+
+</div>
+          </form>
+
+                                     <!-- Modal Delete Task-->
+
+      <div class="modal fade" id="modaldelete{{row._id}}" tabindex="-1" aria-labelledby="delmodalLabel" aria-hidden="true">
+            
+         <div class="modal-dialog">
+               
+            <div class="modal-content">
+                  
+               <form  method="POST" action="{{url_for('delete')}}">
+                     
+                     <input type="hidden"  name="_id" value="{{row._id}}">
+                     
+                     <div class="modal-header">						
+                       
+                        <h4 class="modal-title">Delete Task</h4>
+                         
+                  </div>
+                     
+                  <div class="modal-body">					
+                       
+                     <p>Are you sure you want to delete these Records?</p>
+                     <p class="text-warning"><small>This action cannot be undone.</small></p>
+                    
+                     </div>
+                     
+                     <div class="modal-footer">
+                       
+                        <button type="button" class="button btn-secondary" data-dismiss="modal">Cancel</button>
+                        
+                        <button type="submit" class="button btn btn-block">Confirm</button>
+                    
+                     </div>
+                  
+               
+               </form>
+               
+            </div>
+           
+         </div>
+         
+      </div>
+
+
+                    {% endfor %}
+
+
+                </table>
+               </div> 
+
+            </div>
+
+
+
+                  <!-- Modal Add Task-->
+
+
+<div id="mymodal" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+
+            <h4 class="modal-title">Add Task</h4>
+         </div>
+         <div class="modal-body">
+
+            <form action="{{url_for('insert')}}" method="POST">
+
+
+               <div class="form-group">
+
+                  <label>Task</label>
+                  <input type="text" class="form-control" name="task" required="1">
+
+
+               </div>
+
+
+                <div class="form-group">
+
+
+                  <label>Owner</label>
+                  <input type="text" class="form-control" name="owner" required="1">
+
+
+               </div>
+
+
+                <div class="form-group">
+
+
+                  <label>Email</label>
+                  <input type="email" class="form-control" name="email" required="1">
+
+
+               </div>
+
+
+
+         </div>
+
+
+         <div class="modal-footer">
+
+            <button class="button btn btn-block" type="submit">Confirm</button>
+
+            <button type="button" class="button btn-secondary" data-dismiss="modal">Close</button>
+
+         </div>
+
+
+      </div>
+
+
+   </div>
+
+
+</div>
+
+</form>
+
+
+
+        
+
+    </div>
+
+
+</div>
+
+
+
+
+{% endblock %}
