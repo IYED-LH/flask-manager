@@ -180,7 +180,7 @@ def login():
             hashed_password = login_user['password'].decode("utf8")
             if bcrypt.checkpw(request.form['pass'].encode('utf-8'), hashed_password.encode('utf-8')):
                 session['username'] = request.form['username']
-                return redirect(url_for('Index'))
+                return redirect(url_for('index'))
 
         flash("Unvalid username/password")
         
