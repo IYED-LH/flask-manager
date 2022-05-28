@@ -42,7 +42,7 @@ mail = Mail(app)
 #homepage route & diplay data in table
 
 @app.route('/', methods=["GET", "POST"])
-def Index():
+def index():
     
     all_data = db.appData.find()
    
