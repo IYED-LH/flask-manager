@@ -47,7 +47,7 @@ def Index():
     all_data = db.appData.find()
    
     if 'username' in session:
-        return render_template("Index.html", taskdata = all_data)
+        return render_template("index.html", taskdata = all_data)
     else:
         return render_template ("login.html",)
 
@@ -88,7 +88,7 @@ def update():
         
     flash("Task Updated Successfully")
     
-    return redirect(url_for('Index'))
+    return redirect(url_for('index'))
 
 
 #delete task from dataabase
@@ -103,7 +103,7 @@ def delete():
     
     flash("Task Deleted Successfully")
  
-    return redirect(url_for('Index'))
+    return redirect(url_for('index'))
 
 #Send email
 
@@ -148,7 +148,7 @@ def email(email):
     
  
     
-    return redirect(url_for('Index'))
+    return redirect(url_for('index'))
 
 
 @app.route('/register', methods=['POST', 'GET'])
