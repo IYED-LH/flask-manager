@@ -4,8 +4,7 @@ from bson import ObjectId
 from flask_mail import Mail, Message
 import json
 import bcrypt
-
-
+import smtplib
 
 #Connexion to database
 
@@ -19,7 +18,6 @@ app.secret_key = "Secret Key"
 mail = Mail(app) 
 
 #Json encoder 
-
 class MyEncoder(json.JSONEncoder):
 
     def default(self, obj):
